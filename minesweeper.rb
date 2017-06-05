@@ -81,10 +81,11 @@ def solve maze
 	while true do
 		if Page.game_over?
 			maze=create_maze
+			puts '\n\n!!!New Game!!!\n'
 			Page.start_new_game			
 		end
 
-		Page.read_maze((maze.unopened+maze.unknown).map(&:location)).each{|k,v| maze.get(k).set_state(v)}
+		Page.read_maze((maze.unopened+maze.unknown).reject{|c| maze.neighbours(c).all?{|n| n.unopened? }}.map(&:location)).each{|k,v| maze.get(k).set_state(v)}
 
 		cells = {:to_flag => Set.new, :to_open => Set.new}	
 	
@@ -97,15 +98,16 @@ def solve maze
 			cells[:to_open].merge(temp_cells[:to_open])
 			temp_cells[:to_open].each{|cell| cell.set_state('-')}
 		end
-		
+
 		if cells[:to_flag].empty? && cells[:to_open].empty?
 			cell = maze.random_cell
 			if cell
-			 	puts 'random'
+			 	puts "random"
+			 	cell.set_state('-')
 			 	Page.open(cell.location) 
 			end
 		else
-		 	puts 'calculated'
+		 	puts "calculated"
 		end
 
 		cells[:to_flag].each{|cell| Page.flag(cell.location)}

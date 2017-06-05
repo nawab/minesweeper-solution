@@ -27,7 +27,6 @@ module Page
 	end
 
 	def Page.read_maze locations
-		t=Time.now
 		maze={}
 		begin
 			locations.each do |location|
@@ -38,10 +37,9 @@ module Page
 			end
 		rescue Selenium::WebDriver::Error::UnhandledAlertError => err
 			alert=@driver.switch_to.alert
-			alert.send_keys('@1_last_time@')
+			alert.send_keys('@NaWab@')
 			alert.accept
 		end
-		puts Time.now-t
 		maze
 	end
 
@@ -51,7 +49,7 @@ module Page
 			@elements["#{x}_#{y}"].click
 		rescue Selenium::WebDriver::Error::UnhandledAlertError => err
 			alert=@driver.switch_to.alert
-			alert.send_keys('@1_last_time@')
+			alert.send_keys('@NaWab@')
 			alert.accept
 		end
 	end
@@ -68,7 +66,7 @@ module Page
 			status == 'facedead' || status == 'facewin'  
 		rescue Selenium::WebDriver::Error::UnhandledAlertError => err
 			alert=@driver.switch_to.alert
-			alert.send_keys('@1_last_time@')
+			alert.send_keys('@NaWab@')
 			alert.accept
 		end
 	end
